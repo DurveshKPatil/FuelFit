@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Trash2, Minus, Plus, ShoppingBag } from 'lucide-react'
+import { Trash2, Minus, Plus, ShoppingBag, ExternalLink } from 'lucide-react'
 import { useCartStore, useCartTotals } from '@/store/cart'
 import { formatPrice } from '@/lib/utils'
 
@@ -35,7 +35,7 @@ export default function CartPage() {
             <div key={item.id} className="card flex gap-5 p-4">
               <div className="h-28 w-28 shrink-0 overflow-hidden rounded-lg bg-dark-50">
                 <img
-                  src={item.product.images[0] + '?w=224&h=224&fit=crop'}
+                  src={item.product.images[0]}
                   alt={item.product.name}
                   className="h-full w-full object-cover"
                 />
@@ -95,30 +95,24 @@ export default function CartPage() {
             <h2 className="text-lg font-bold">Order Summary</h2>
             <div className="mt-4 space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-dark-500">Subtotal</span>
+                <span className="text-dark-500">Subtotal ({itemCount} items)</span>
                 <span className="font-medium">{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-dark-500">Shipping</span>
-                <span className="font-medium text-green-600">
-                  {subtotal >= 75 ? 'Free' : formatPrice(5.99)}
-                </span>
+                <span className="text-dark-500">Calculated on Amazon</span>
               </div>
-              {subtotal < 75 && (
-                <p className="rounded-lg bg-primary-50 p-2 text-xs text-primary-800">
-                  Add {formatPrice(75 - subtotal)} more for free shipping
-                </p>
-              )}
               <div className="flex justify-between border-t border-dark-100 pt-3 text-base font-bold">
-                <span>Total</span>
-                <span>{formatPrice(subtotal + (subtotal >= 75 ? 0 : 5.99))}</span>
+                <span>Estimated Total</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
             </div>
             <button
               onClick={() => router.push('/checkout')}
-              className="btn-primary mt-6 w-full py-3"
+              className="btn-primary mt-6 flex w-full items-center justify-center gap-2 py-3"
             >
-              Proceed to Checkout
+              Buy
+              <ExternalLink className="h-4 w-4" />
             </button>
             <Link href="/products" className="btn-secondary mt-2 block w-full text-center">
               Continue Shopping

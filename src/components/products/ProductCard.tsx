@@ -28,7 +28,7 @@ export default function ProductCard({ product }: { product: Product }) {
     >
       <div className="relative aspect-square overflow-hidden bg-dark-50">
         <img
-          src={product.images[0] + '?w=600&h=600&fit=crop'}
+          src={product.images[0]}
           alt={product.name}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"

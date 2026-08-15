@@ -11,7 +11,6 @@ import { cn } from '@/lib/utils'
 const navLinks = [
   { name: 'Shop', href: '/products' },
   { name: 'Best Sellers', href: '/products?sort=featured' },
-  { name: 'Subscriptions', href: '/products?subscription=true' },
   { name: 'About', href: '/about' },
 ]
 
@@ -39,7 +38,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-dark-100 bg-white/95 backdrop-blur">
       <div className="bg-dark-900 text-center text-xs text-white">
         <div className="container-page py-1.5">
-          Free shipping on orders over $75 &bull; 30-day money-back guarantee
+          Shop now on FuelFit &bull; Redirected to Amazon.in for secure checkout
         </div>
       </div>
 
@@ -81,7 +80,7 @@ export default function Header() {
                 autoFocus
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search proteins..."
+                placeholder="Search products..."
                 className="input w-48 md:w-64"
               />
               <button
@@ -125,20 +124,6 @@ export default function Header() {
                       className="rounded-lg px-3 py-2 text-sm hover:bg-dark-50"
                     >
                       My Account
-                    </Link>
-                    <Link
-                      href="/account/orders"
-                      onClick={() => setUserMenuOpen(false)}
-                      className="rounded-lg px-3 py-2 text-sm hover:bg-dark-50"
-                    >
-                      My Orders
-                    </Link>
-                    <Link
-                      href="/account/subscriptions"
-                      onClick={() => setUserMenuOpen(false)}
-                      className="rounded-lg px-3 py-2 text-sm hover:bg-dark-50"
-                    >
-                      Subscriptions
                     </Link>
                     {session.user.role === 'ADMIN' && (
                       <Link

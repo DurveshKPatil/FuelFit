@@ -7,28 +7,32 @@ const securityHeaders = [
   { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=()' },
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
   {
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
       "base-uri 'self'",
-      "form-action 'self'",
+      "form-action 'self' https://www.amazon.in",
       "frame-ancestors 'self'",
       "object-src 'none'",
-      "img-src 'self' data: blob: https://images.unsplash.com https://*.stripe.com",
+      "img-src 'self' data: blob: https://images.unsplash.com https://m.media-amazon.com https://smytten-image.gumlet.io",
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://*.stripe.com",
-      "connect-src 'self' https://api.stripe.com https://checkout.stripe.com https://*.stripe.com",
-      "frame-src https://js.stripe.com https://checkout.stripe.com https://*.stripe.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "connect-src 'self'",
     ].join('; '),
   },
 ]
 
 const nextConfig = {
   images: {
-    domains: ['localhost', 'images.unsplash.com', 'via.placeholder.com'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'via.placeholder.com' },
+      { protocol: 'https', hostname: 'm.media-amazon.com' },
+      { protocol: 'https', hostname: 'smytten-image.gumlet.io' },
+    ],
   },
   async headers() {
     return [

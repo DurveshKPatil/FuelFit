@@ -14,14 +14,43 @@ export default function AboutPage() {
             About FuelFit
           </p>
           <h1 className="mt-2 max-w-2xl text-4xl font-bold">
-            Premium protein, engineered by athletes for athletes
+            Your trusted partner for premium nutrition
           </h1>
           <p className="mt-4 max-w-2xl text-dark-300">
-            We started FuelFit because we were tired of proprietary blends, hidden
-            fillers, and protein that didn&apos;t deliver what the label promised.
-            Every product we make is third-party tested, nutritionally transparent,
-            and backed by a 30-day money-back guarantee.
+            We curate the best nutrition products from top brands and bring them to you
+            through our partnership with Amazon.in. Browse our selection, add to cart,
+            and complete your purchase on Amazon for a secure, trusted shopping experience.
           </p>
+        </div>
+      </section>
+
+      <section id="how-it-works" className="container-page py-16">
+        <h2 className="section-title mb-8 text-center">How It Works</h2>
+        <div className="grid gap-8 lg:grid-cols-3">
+          <div className="card p-8 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 text-xl font-bold text-primary-700">1</div>
+            <h3 className="mt-4 text-xl font-bold">Browse Products</h3>
+            <p className="mt-3 text-dark-600">
+              Explore our curated selection of premium nutrition products. Read reviews,
+              check nutrition facts, and find what&apos;s right for you.
+            </p>
+          </div>
+          <div className="card p-8 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 text-xl font-bold text-primary-700">2</div>
+            <h3 className="mt-4 text-xl font-bold">Add to Cart</h3>
+            <p className="mt-3 text-dark-600">
+              Found something you like? Add it to your cart. You can add multiple
+              products from different brands.
+            </p>
+          </div>
+          <div className="card p-8 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 text-xl font-bold text-primary-700">3</div>
+            <h3 className="mt-4 text-xl font-bold">Buy on Amazon</h3>
+            <p className="mt-3 text-dark-600">
+              When you&apos;re ready, click &quot;Buy on Amazon&quot; and you&apos;ll be
+              redirected to Amazon.in to complete your secure purchase.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -35,17 +64,17 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="card p-8">
-            <h3 className="text-xl font-bold">Our Standards</h3>
+            <h3 className="text-xl font-bold">Trusted Partners</h3>
             <p className="mt-3 text-dark-600">
-              No proprietary blends. No artificial colors. Every batch is tested by
-              independent labs to verify purity, potency, and label accuracy.
+              We partner with Amazon.in to bring you authentic products with secure
+              payment, fast delivery, and easy returns.
             </p>
           </div>
           <div className="card p-8">
-            <h3 className="text-xl font-bold">Our Guarantee</h3>
+            <h3 className="text-xl font-bold">Quality First</h3>
             <p className="mt-3 text-dark-600">
-              Love your protein or get a full refund within 30 days. No questions
-              asked, no restocking fees, no hassle.
+              We carefully select products from reputable brands that meet our
+              standards for quality, transparency, and value.
             </p>
           </div>
         </div>
@@ -57,24 +86,24 @@ export default function AboutPage() {
           <div className="space-y-4">
             {[
               {
-                q: 'How much protein do I need per day?',
-                a: 'Most active adults benefit from 1.6-2.2g of protein per kilogram of body weight daily. A single scoop of our protein delivers 24-27g to help you hit your targets.',
+                q: 'How does FuelFit work?',
+                a: 'FuelFit is an affiliate partner of Amazon. We curate and list products on our site. When you click "Buy on Amazon", you\'re redirected to Amazon.in to complete your purchase. Your order, payment, and shipping are all handled by Amazon.',
               },
               {
-                q: 'When should I take protein?',
-                a: 'Protein is most effective spread across the day. Many people prefer a shake post-workout or before bed, but consistent daily intake matters most.',
+                q: 'Why should I buy through FuelFit?',
+                a: 'We do the research to find the best nutrition products so you don\'t have to. Our curated selection saves you time, and you still get all the benefits of shopping on Amazon — secure payment, fast delivery, and easy returns.',
               },
               {
-                q: 'Is your protein third-party tested?',
-                a: 'Yes. Every batch is tested by independent laboratories to verify protein content, purity, and absence of banned substances.',
+                q: 'Is my payment secure?',
+                a: 'Yes! All payments are processed through Amazon.in, one of the world\'s most trusted e-commerce platforms. We never see or store your payment information.',
               },
               {
-                q: 'How does the subscription work?',
-                a: 'Choose your product, set a delivery schedule, and save 20% on every order. You can pause, skip, or cancel anytime from your account.',
+                q: 'What about returns and refunds?',
+                a: 'Since your purchase is through Amazon.in, you\'re covered by Amazon\'s return policy. You can return products directly through Amazon for a full refund.',
               },
               {
-                q: 'What is your return policy?',
-                a: 'We offer a 30-day money-back guarantee. If you are not satisfied, contact us within 30 days for a full refund.',
+                q: 'Do you charge extra fees?',
+                a: 'No. The prices you see on our site match the prices on Amazon. We earn a small commission from Amazon for referring you, at no extra cost to you.',
               },
             ].map((item) => (
               <div key={item.q} className="card p-6">
@@ -114,25 +143,12 @@ export default function AboutPage() {
         </form>
       </section>
 
-      <section id="shipping" className="border-t border-dark-100 bg-dark-50 py-16">
-        <div className="container-page max-w-3xl">
-          <h2 className="section-title mb-8 text-center">Shipping & Returns</h2>
-          <div className="space-y-4">
-            <div className="card p-6">
-              <h3 className="font-semibold">Shipping</h3>
-              <p className="mt-2 text-sm text-dark-600">
-                Free standard shipping on orders over $75. Orders ship within 24 hours
-                and typically arrive in 5-7 business days.
-              </p>
-            </div>
-            <div className="card p-6">
-              <h3 className="font-semibold">Returns</h3>
-              <p className="mt-2 text-sm text-dark-600">
-                We offer a 30-day money-back guarantee on all products. Contact support
-                to initiate a return and receive a prepaid shipping label.
-              </p>
-            </div>
-          </div>
+      <section className="border-t border-dark-100 bg-dark-50 py-8">
+        <div className="container-page max-w-3xl text-center text-sm text-dark-500">
+          <p>
+            As an Amazon Associate, FuelFit earns from qualifying purchases. This
+            helps us keep the site running at no extra cost to you.
+          </p>
         </div>
       </section>
     </div>

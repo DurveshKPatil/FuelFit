@@ -83,7 +83,7 @@ export default function AdminProducts() {
                     <div className="flex items-center gap-3">
                       <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-dark-50">
                         <img
-                          src={product.images[0] + '?w=96&h=96&fit=crop'}
+                          src={product.images[0]}
                           alt={product.name}
                           className="h-full w-full object-cover"
                         />

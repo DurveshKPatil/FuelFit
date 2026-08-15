@@ -36,6 +36,13 @@ export interface Product {
   featured: boolean
   isActive: boolean
   inventory: number
+  amazonAsin?: string | null
+  affiliateLink?: string | null
+  amazonUrl?: string | null
+  rating?: number | null
+  ratingCount?: number | null
+  bestSellerRank?: string | null
+  boughtInPastMonth?: string | null
   createdAt: Date
   updatedAt: Date
 }
@@ -54,45 +61,4 @@ export interface CartState {
   removeItem: (productId: string, variant?: Record<string, any>) => void
   updateQuantity: (productId: string, quantity: number, variant?: Record<string, any>) => void
   clearCart: () => void
-}
-
-export interface Order {
-  id: string
-  userId: string
-  email: string
-  status: string
-  subtotal: number
-  tax: number
-  shipping: number
-  total: number
-  stripePaymentId?: string | null
-  shippingAddress?: Record<string, any> | null
-  billingAddress?: Record<string, any> | null
-  notes?: string | null
-  items: OrderItem[]
-  createdAt: Date
-}
-
-export interface OrderItem {
-  id: string
-  productId: string
-  product: Product
-  quantity: number
-  price: number
-  variant?: Record<string, any> | null
-}
-
-export interface Subscription {
-  id: string
-  userId: string
-  productId: string
-  stripePriceId: string
-  stripeSubscriptionId?: string | null
-  status: string
-  interval: string
-  quantity: number
-  currentPeriodEnd?: Date | null
-  cancelAtPeriodEnd: boolean
-  product: Product
-  createdAt: Date
 }

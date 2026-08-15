@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { products as seedProducts } from '@/lib/seed-data'
+import { products as seedProducts, categories } from '@/lib/seed-data'
 import { slugify } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
@@ -25,11 +25,10 @@ export async function GET(req: Request) {
     let products = seedProducts.map(toPublic)
 
     if (category && category !== 'all') {
-      const expected = category
-        .split('-')
-        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(' ')
-      products = products.filter((p) => p.category.toLowerCase() === expected.toLowerCase())
+      const matchedCat = categories.find((c) => c.slug === category)
+      if (matchedCat) {
+        products = products.filter((p) => p.category === matchedCat.name)
+      }
     }
 
     if (q) {

@@ -1,28 +1,28 @@
 import { getFeaturedProducts } from '@/lib/data'
 import ProductCard from '@/components/products/ProductCard'
 import Link from 'next/link'
-import { ArrowRight, ShieldCheck, Truck, Leaf, RotateCcw } from 'lucide-react'
+import { ArrowRight, ShieldCheck, Truck, ExternalLink, ShoppingCart } from 'lucide-react'
 
 const features = [
   {
-    icon: Truck,
-    title: 'Fast Free Shipping',
-    desc: 'Free shipping on orders over $75, delivered in 5-7 business days.',
+    icon: ShoppingCart,
+    title: 'Easy Shopping',
+    desc: 'Browse products, add to cart, and checkout seamlessly on Amazon.in.',
   },
   {
     icon: ShieldCheck,
-    title: 'Third-Party Tested',
-    desc: 'Every batch is independently tested for purity and label accuracy.',
+    title: 'Trusted Products',
+    desc: 'We curate only the best nutrition products from reputable brands.',
   },
   {
-    icon: RotateCcw,
-    title: '30-Day Guarantee',
-    desc: 'Not satisfied? Full refund within 30 days, no questions asked.',
+    icon: ExternalLink,
+    title: 'Secure Checkout',
+    desc: 'All purchases are processed through Amazon.in for secure payment.',
   },
   {
-    icon: Leaf,
-    title: 'Clean Ingredients',
-    desc: 'No artificial colors, no fillers, no proprietary blends. Ever.',
+    icon: Truck,
+    title: 'Fast Delivery',
+    desc: 'Enjoy Amazon\'s fast and reliable delivery across India.',
   },
 ]
 
@@ -42,25 +42,25 @@ export default async function HomePage() {
         </div>
         <div className="container-page relative py-24 lg:py-32">
           <p className="badge-primary mb-4 rounded-full bg-primary-600/20 text-primary-300">
-            New: Subscription Savings Up to 20%
+            Shop on FuelFit &bull; Checkout on Amazon.in
           </p>
           <h1 className="max-w-2xl text-4xl font-bold sm:text-5xl lg:text-6xl">
             Fuel Your Gains With{' '}
-            <span className="text-primary-500">Premium Protein</span>
+            <span className="text-primary-500">Premium Nutrition</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg text-dark-300">
-            Clean, third-party-tested protein powders and supplements engineered by
-            athletes, for athletes. Free shipping over $75.
+            Discover top-rated nutrition products. Browse, add to cart, and
+            complete your purchase on Amazon.in for secure checkout.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link href="/products" className="btn-primary px-6 py-3 text-base">
-              Shop Protein
+              Shop Now
             </Link>
             <Link
-              href="/products?sort=featured"
+              href="/about#how-it-works"
               className="btn px-6 py-3 text-base text-white ring-1 ring-white/30 hover:bg-white/10"
             >
-              Best Sellers <ArrowRight className="ml-2 h-4 w-4" />
+              How It Works <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </div>
           <div className="mt-12 flex flex-wrap gap-8 text-sm text-dark-300">
@@ -122,46 +122,34 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="container-page grid gap-8 py-16 lg:grid-cols-2">
-        <div className="relative overflow-hidden rounded-2xl bg-dark-900 p-10 text-white">
-          <img
-            src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=80"
-            alt="Subscriptions"
-            className="absolute inset-0 h-full w-full object-cover opacity-20"
-          />
-          <div className="relative">
-            <p className="text-sm font-medium uppercase tracking-wider text-primary-400">
-              Subscribe & Save
-            </p>
-            <h2 className="mt-2 text-3xl font-bold">Never Run Out Again</h2>
-            <p className="mt-4 max-w-md text-dark-300">
-              Get 20% off, free shipping, and flexible scheduling with our
-              subscription plans. Pause or cancel anytime.
-            </p>
-            <Link href="/products?subscription=true" className="btn-primary mt-6">
-              Start Saving 20%
-            </Link>
+      <section className="container-page py-16">
+        <div className="card mx-auto max-w-2xl p-10 text-center">
+          <h2 className="text-3xl font-bold">How It Works</h2>
+          <p className="mt-4 text-dark-600">
+            Shopping with FuelFit is simple. Browse our curated products, add them
+            to your cart, and when you&apos;re ready, click &quot;Buy on Amazon&quot; to
+            complete your purchase on Amazon.in.
+          </p>
+          <div className="mt-8 grid gap-6 sm:grid-cols-3">
+            <div>
+              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary-100 text-lg font-bold text-primary-700">1</div>
+              <p className="mt-2 font-semibold">Browse</p>
+              <p className="text-sm text-dark-500">Find products you love</p>
+            </div>
+            <div>
+              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary-100 text-lg font-bold text-primary-700">2</div>
+              <p className="mt-2 font-semibold">Add to Cart</p>
+              <p className="text-sm text-dark-500">Select quantities</p>
+            </div>
+            <div>
+              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary-100 text-lg font-bold text-primary-700">3</div>
+              <p className="mt-2 font-semibold">Buy on Amazon</p>
+              <p className="text-sm text-dark-500">Secure checkout</p>
+            </div>
           </div>
-        </div>
-        <div className="relative overflow-hidden rounded-2xl bg-primary-600 p-10 text-white">
-          <img
-            src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80"
-            alt="Bundle and save"
-            className="absolute inset-0 h-full w-full object-cover opacity-20"
-          />
-          <div className="relative">
-            <p className="text-sm font-medium uppercase tracking-wider text-primary-100">
-              Bundle & Save
-            </p>
-            <h2 className="mt-2 text-3xl font-bold">Build Your Stack</h2>
-            <p className="mt-4 max-w-md text-primary-50">
-              Combine protein, BCAAs, and creatine to save up to 25%. Perfect
-              stacks for cutting, bulking, or maintenance.
-            </p>
-            <Link href="/products?category=bundles" className="btn mt-6 bg-white text-primary-700 hover:bg-primary-50">
-              Shop Bundles
-            </Link>
-          </div>
+          <Link href="/about#how-it-works" className="btn-primary mt-8 inline-block">
+            Learn More
+          </Link>
         </div>
       </section>
 
@@ -169,7 +157,7 @@ export default async function HomePage() {
         <div className="container-page max-w-2xl">
           <h2 className="text-3xl font-bold">Ready to Reach Your Goals?</h2>
           <p className="mt-4 text-dark-300">
-            Join 50,000+ athletes who trust FuelFit for their protein.
+            Join 50,000+ athletes who trust FuelFit for their nutrition.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Link href="/products" className="btn-primary px-8 py-3">

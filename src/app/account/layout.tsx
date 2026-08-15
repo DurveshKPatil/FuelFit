@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { User, Package, RefreshCw, Settings, LayoutDashboard } from 'lucide-react'
+import { User, Settings, LayoutDashboard } from 'lucide-react'
 import { cn, getInitials } from '@/lib/utils'
 
 export default function AccountLayout({
@@ -31,8 +31,6 @@ export default function AccountLayout({
 
   const navItems = [
     { name: 'Overview', href: '/account', icon: User },
-    { name: 'Orders', href: '/account/orders', icon: Package },
-    { name: 'Subscriptions', href: '/account/subscriptions', icon: RefreshCw },
     { name: 'Settings', href: '/account/settings', icon: Settings },
   ]
 

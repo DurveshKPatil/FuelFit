@@ -34,6 +34,8 @@ export default function ProductFormModal({ product, onClose, onSaved }: Props) {
     featured: product?.featured || false,
     isActive: product?.isActive ?? true,
     image: product?.images?.[0] || '',
+    amazonAsin: product?.amazonAsin || '',
+    affiliateLink: product?.affiliateLink || '',
   })
 
   const categories = [
@@ -44,6 +46,7 @@ export default function ProductFormModal({ product, onClose, onSaved }: Props) {
     'Collagen',
     'Bars & Snacks',
     'Bundles',
+    'Oats & Cereals',
   ]
 
   const handleChange = (field: string, value: any) => {
@@ -72,6 +75,8 @@ export default function ProductFormModal({ product, onClose, onSaved }: Props) {
       inventory: form.inventory,
       featured: form.featured,
       isActive: form.isActive,
+      amazonAsin: form.amazonAsin || null,
+      affiliateLink: form.affiliateLink || null,
     }
 
     try {
@@ -157,7 +162,7 @@ export default function ProductFormModal({ product, onClose, onSaved }: Props) {
             />
           </div>
           <div>
-            <label className={labelClass}>Price ($)</label>
+            <label className={labelClass}>Price (INR)</label>
             <input
               type="number"
               step="0.01"
@@ -169,7 +174,7 @@ export default function ProductFormModal({ product, onClose, onSaved }: Props) {
             />
           </div>
           <div>
-            <label className={labelClass}>Compare At Price ($)</label>
+            <label className={labelClass}>Compare At Price (INR)</label>
             <input
               type="number"
               step="0.01"
@@ -252,6 +257,30 @@ export default function ProductFormModal({ product, onClose, onSaved }: Props) {
               className={inputClass}
               placeholder="https://images.unsplash.com/..."
             />
+          </div>
+          <div className="sm:col-span-2">
+            <label className={labelClass}>Amazon ASIN</label>
+            <input
+              value={form.amazonAsin}
+              onChange={(e) => handleChange('amazonAsin', e.target.value)}
+              className={inputClass}
+              placeholder="e.g., B0CWH4NT7V"
+            />
+            <p className="mt-1 text-xs text-dark-400">
+              The Amazon Standard Identification Number for this product. Found in the product URL on Amazon.
+            </p>
+          </div>
+          <div className="sm:col-span-2">
+            <label className={labelClass}>Affiliate Link</label>
+            <input
+              value={form.affiliateLink}
+              onChange={(e) => handleChange('affiliateLink', e.target.value)}
+              className={inputClass}
+              placeholder="e.g., https://link.amazon/B0c4QOcPQ"
+            />
+            <p className="mt-1 text-xs text-dark-400">
+              Custom affiliate link. If set, this will be used instead of the ASIN-based URL.
+            </p>
           </div>
           <div className="sm:col-span-2">
             <label className={labelClass}>Ingredients</label>

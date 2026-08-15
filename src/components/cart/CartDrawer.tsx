@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { X, Plus, Minus, ShoppingBag, Trash2 } from 'lucide-react'
+import { X, Plus, Minus, ShoppingBag, Trash2, ExternalLink } from 'lucide-react'
 import { useCartStore, useCartTotals } from '@/store/cart'
 import { formatPrice, cn } from '@/lib/utils'
 
@@ -29,10 +29,6 @@ export default function CartDrawer() {
       document.body.style.overflow = ''
     }
   }, [open])
-
-  const freeShippingThreshold = 75
-  const remaining = Math.max(0, freeShippingThreshold - subtotal)
-  const progress = Math.min(100, (subtotal / freeShippingThreshold) * 100)
 
   const handleCheckout = () => {
     setOpen(false)
@@ -66,24 +62,6 @@ export default function CartDrawer() {
           </button>
         </div>
 
-        <div className="border-b border-dark-100 bg-primary-50 px-6 py-3">
-          {remaining > 0 ? (
-            <p className="text-xs text-primary-800">
-              You&apos;re <span className="font-bold">{formatPrice(remaining)}</span> away from free shipping
-            </p>
-          ) : (
-            <p className="text-xs font-semibold text-green-700">
-              You&apos;ve unlocked free shipping!
-            </p>
-          )}
-          <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-primary-100">
-            <div
-              className="h-full rounded-full bg-primary-600 transition-all"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6">
             <ShoppingBag className="h-12 w-12 text-dark-300" />
@@ -104,7 +82,7 @@ export default function CartDrawer() {
                   <li key={item.id} className="flex gap-4">
                     <div className="h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-dark-50">
                       <img
-                        src={item.product.images[0] + '?w=160&h=160&fit=crop'}
+                        src={item.product.images[0]}
                         alt={item.product.name}
                         className="h-full w-full object-cover"
                       />
@@ -165,9 +143,10 @@ export default function CartDrawer() {
                 <span className="text-sm text-dark-500">Subtotal</span>
                 <span className="text-lg font-bold">{formatPrice(subtotal)}</span>
               </div>
-              <p className="mb-4 text-xs text-dark-500">Shipping and taxes calculated at checkout.</p>
-              <button onClick={handleCheckout} className="btn-primary w-full">
-                Checkout
+              <p className="mb-4 text-xs text-dark-500">Shipping calculated on Amazon.in</p>
+              <button onClick={handleCheckout} className="btn-primary flex w-full items-center justify-center gap-2">
+                Buy
+                <ExternalLink className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setOpen(false)}

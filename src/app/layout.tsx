@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: '%s | FuelFit Protein',
   },
   description:
-    'Shop premium protein powders, isolates, casein, plant proteins, and more. Fast shipping, money-back guarantee, and subscription savings.',
+    'Shop premium nutrition products. Browse, add to cart, and checkout securely on Amazon.in.',
   keywords: ['protein powder', 'whey protein', 'supplements', 'muscle building', 'protein'],
   openGraph: {
     title: 'FuelFit Protein',
@@ -38,7 +38,6 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
           <CartDrawer />
-          <Toaster />
           <Toaster />
         </Providers>
       </body>

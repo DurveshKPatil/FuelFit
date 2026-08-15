@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Package, ShoppingCart, Users, RefreshCw } from 'lucide-react'
+import { LayoutDashboard, Package } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export default function AdminLayout({
@@ -32,9 +32,6 @@ export default function AdminLayout({
   const navItems = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { name: 'Products', href: '/admin/products', icon: Package },
-    { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
-    { name: 'Customers', href: '/admin/customers', icon: Users },
-    { name: 'Subscriptions', href: '/admin/subscriptions', icon: RefreshCw },
   ]
 
   return (

@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { rateLimit, getClientIp } from '@/lib/rate-limit'
 import { assertSameOrigin } from '@/lib/security'
-import { productSchema, orderStatusSchema } from '@/lib/validation'
+import { productSchema } from '@/lib/validation'
 
 export const dynamic = 'force-dynamic'
 
@@ -40,18 +40,6 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
     const type = searchParams.get('type') || 'products'
 
-    if (type === 'orders') {
-      const orders = await prisma.order.findMany({
-        include: {
-          user: { select: { id: true, name: true, email: true } },
-          items: { include: { product: true } },
-        },
-        orderBy: { createdAt: 'desc' },
-        take: 100,
-      })
-      return NextResponse.json({ orders })
-    }
-
     if (type === 'users') {
       const users = await prisma.user.findMany({
         select: {
@@ -65,17 +53,6 @@ export async function GET(req: Request) {
         take: 100,
       })
       return NextResponse.json({ users })
-    }
-
-    if (type === 'subscriptions') {
-      const subscriptions = await prisma.subscription.findMany({
-        include: {
-          user: { select: { id: true, name: true, email: true } },
-          product: true,
-        },
-        orderBy: { createdAt: 'desc' },
-      })
-      return NextResponse.json({ subscriptions })
     }
 
     const products = await prisma.product.findMany({
@@ -127,21 +104,11 @@ export async function POST(req: Request) {
           tags: p.tags || [],
           featured: p.featured || false,
           inventory: p.inventory,
+          amazonAsin: p.amazonAsin ?? null,
+          affiliateLink: p.affiliateLink ?? null,
         },
       })
       return NextResponse.json({ product }, { status: 201 })
-    }
-
-    if (action === 'update-order-status') {
-      const parsed = orderStatusSchema.safeParse(data)
-      if (!parsed.success) {
-        return NextResponse.json({ error: 'Invalid order status' }, { status: 400 })
-      }
-      const order = await prisma.order.update({
-        where: { id: parsed.data.orderId },
-        data: { status: parsed.data.status },
-      })
-      return NextResponse.json({ order })
     }
 
     return NextResponse.json({ error: 'Unknown action' }, { status: 400 })
@@ -196,6 +163,8 @@ export async function PATCH(req: Request) {
         featured: p.featured || false,
         isActive: p.isActive !== undefined ? p.isActive : true,
         inventory: p.inventory,
+        amazonAsin: p.amazonAsin ?? null,
+        affiliateLink: p.affiliateLink ?? null,
       },
     })
     return NextResponse.json({ product })

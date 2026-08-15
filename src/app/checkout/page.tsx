@@ -2,38 +2,19 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import { useCartStore, useCartTotals } from '@/store/cart'
 import { useToast } from '@/components/ui/Toaster'
 import { formatPrice } from '@/lib/utils'
-import { Lock, ChevronRight, Package } from 'lucide-react'
+import { ShoppingCart, ChevronRight, ExternalLink, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const { data: session } = useSession()
-  const { items, clearCart } = useCartStore()
+  const { items } = useCartStore()
   const { subtotal, itemCount } = useCartTotals()
   const { toast } = useToast()
 
   const [loading, setLoading] = useState(false)
-  const [email, setEmail] = useState(session?.user?.email || '')
-  const [shippingAddress, setShippingAddress] = useState({
-    name: session?.user?.name || '',
-    street: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: 'US',
-    phone: '',
-  })
-  const [sameAsBilling, setSameAsBilling] = useState(true)
-  const [notes, setNotes] = useState('')
-
-  useEffect(() => {
-    if (session?.user?.email) setEmail(session.user.email)
-    if (session?.user?.name) setShippingAddress((prev) => ({ ...prev, name: session.user.name || '' }))
-  }, [session])
 
   useEffect(() => {
     if (items.length === 0 && !loading) {
@@ -41,12 +22,7 @@ export default function CheckoutPage() {
     }
   }, [items, loading, router])
 
-  const handleFieldChange = (field: string, value: string) => {
-    setShippingAddress((prev) => ({ ...prev, [field]: value }))
-  }
-
-  const handleCheckout = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleCheckout = async () => {
     setLoading(true)
 
     try {
@@ -56,12 +32,9 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           items: items.map((item) => ({
             productId: item.productId,
+            slug: item.product.slug,
             quantity: item.quantity,
           })),
-          email,
-          shippingAddress,
-          billingAddress: sameAsBilling ? shippingAddress : shippingAddress,
-          notes,
         }),
       })
 
@@ -73,7 +46,7 @@ export default function CheckoutPage() {
       }
 
       if (data.url) {
-        window.location.href = data.url
+        window.open(data.url, '_blank')
       }
     } catch {
       toast('Something went wrong. Please try again.', 'error')
@@ -82,8 +55,9 @@ export default function CheckoutPage() {
     }
   }
 
-  const inputClass = 'input'
-  const labelClass = 'label'
+  if (items.length === 0) {
+    return null
+  }
 
   return (
     <div className="container-page py-8">
@@ -95,149 +69,24 @@ export default function CheckoutPage() {
         </Link>
       </p>
 
-      <form onSubmit={handleCheckout} className="mt-8 grid gap-10 lg:grid-cols-[1fr_380px]">
-        <div className="space-y-8">
-          <section>
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-bold">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-600 text-sm text-white">1</span>
-              Contact Information
-            </h2>
-            <div className="card p-6">
-              <label className={labelClass}>Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={inputClass}
-                placeholder="you@example.com"
-                required
-              />
-            </div>
-          </section>
-
-          <section>
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-bold">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-600 text-sm text-white">2</span>
-              Shipping Address
-            </h2>
-            <div className="card grid gap-4 p-6 sm:grid-cols-2">
-              <div className="sm:col-span-2">
-                <label className={labelClass}>Full Name</label>
-                <input
-                  value={shippingAddress.name}
-                  onChange={(e) => handleFieldChange('name', e.target.value)}
-                  className={inputClass}
-                  required
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <label className={labelClass}>Street Address</label>
-                <input
-                  value={shippingAddress.street}
-                  onChange={(e) => handleFieldChange('street', e.target.value)}
-                  className={inputClass}
-                  placeholder="123 Main Street"
-                  required
-                />
-              </div>
-              <div>
-                <label className={labelClass}>City</label>
-                <input
-                  value={shippingAddress.city}
-                  onChange={(e) => handleFieldChange('city', e.target.value)}
-                  className={inputClass}
-                  required
-                />
-              </div>
-              <div>
-                <label className={labelClass}>State</label>
-                <input
-                  value={shippingAddress.state}
-                  onChange={(e) => handleFieldChange('state', e.target.value)}
-                  className={inputClass}
-                  required
-                />
-              </div>
-              <div>
-                <label className={labelClass}>ZIP Code</label>
-                <input
-                  value={shippingAddress.zipCode}
-                  onChange={(e) => handleFieldChange('zipCode', e.target.value)}
-                  className={inputClass}
-                  required
-                />
-              </div>
-              <div>
-                <label className={labelClass}>Country</label>
-                <select
-                  value={shippingAddress.country}
-                  onChange={(e) => handleFieldChange('country', e.target.value)}
-                  className={inputClass}
-                >
-                  <option value="US">United States</option>
-                  <option value="CA">Canada</option>
-                  <option value="UK">United Kingdom</option>
-                  <option value="AU">Australia</option>
-                </select>
-              </div>
-              <div className="sm:col-span-2">
-                <label className={labelClass}>Phone (optional)</label>
-                <input
-                  value={shippingAddress.phone}
-                  onChange={(e) => handleFieldChange('phone', e.target.value)}
-                  className={inputClass}
-                />
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-bold">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-600 text-sm text-white">3</span>
-              Billing Address
-            </h2>
-            <div className="card p-6">
-              <label className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={sameAsBilling}
-                  onChange={(e) => setSameAsBilling(e.target.checked)}
-                  className="h-4 w-4 rounded border-dark-300 text-primary-600"
-                />
-                <span className="text-sm">Billing address is the same as shipping</span>
-              </label>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-bold">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-600 text-sm text-white">4</span>
-              Order Notes (optional)
-            </h2>
-            <div className="card p-6">
-              <textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                className={inputClass}
-                rows={3}
-                placeholder="Delivery instructions, gift message, etc."
-              />
-            </div>
-          </section>
-        </div>
-
-        <aside className="h-fit lg:sticky lg:top-28">
+      <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_380px]">
+        <div className="space-y-6">
           <div className="card p-6">
             <h2 className="mb-4 flex items-center gap-2 text-lg font-bold">
-              <Package className="h-5 w-5 text-primary-600" />
-              Order Summary
+              <ShoppingCart className="h-5 w-5 text-primary-600" />
+              Review Your Order
             </h2>
-            <ul className="max-h-64 space-y-3 overflow-y-auto pr-1">
+            <p className="mb-4 text-sm text-dark-500">
+              Review the items below. When you click &quot;Buy on Amazon&quot;, you&apos;ll be
+              redirected to Amazon.in to complete your purchase.
+            </p>
+
+            <ul className="space-y-4">
               {items.map((item) => (
-                <li key={item.id} className="flex items-center gap-3">
-                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-dark-50">
+                <li key={item.id} className="flex items-center gap-4">
+                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-dark-50">
                     <img
-                      src={item.product.images[0] + '?w=112&h=112&fit=crop'}
+                      src={item.product.images[0]}
                       alt={item.product.name}
                       className="h-full w-full object-cover"
                     />
@@ -246,50 +95,89 @@ export default function CheckoutPage() {
                     </span>
                   </div>
                   <div className="flex-1">
-                    <p className="line-clamp-1 text-sm font-medium">{item.product.name}</p>
-                    <p className="text-xs text-dark-500">{formatPrice(item.product.price)} each</p>
+                    <Link
+                      href={`/products/${item.product.slug}`}
+                      className="font-semibold hover:text-primary-600"
+                    >
+                      {item.product.name}
+                    </Link>
+                    <p className="mt-1 text-xs text-dark-500">
+                      {item.product.flavor && `Flavor: ${item.product.flavor}`}
+                      {item.product.size && ` | ${item.product.size}`}
+                    </p>
+                    <p className="mt-1 text-sm font-medium">
+                      {formatPrice(item.product.price)} × {item.quantity}
+                    </p>
                   </div>
-                  <p className="text-sm font-semibold">
+                  <p className="text-lg font-bold">
                     {formatPrice(item.product.price * item.quantity)}
                   </p>
                 </li>
               ))}
             </ul>
+          </div>
 
-            <div className="mt-4 space-y-2 border-t border-dark-100 pt-4 text-sm">
+          <div className="card border-yellow-200 bg-yellow-50 p-4">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-yellow-600" />
+              <div className="text-sm text-yellow-800">
+                <p className="font-semibold">You&apos;re buying from Amazon.in</p>
+                <p className="mt-1">
+                  FuelFit is an affiliate partner of Amazon. When you click the button
+                  below, you&apos;ll be redirected to Amazon.in to complete your purchase.
+                  Your order, payment, and shipping will be handled by Amazon.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside className="h-fit lg:sticky lg:top-28">
+          <div className="card p-6">
+            <h2 className="text-lg font-bold">Order Summary</h2>
+            <div className="mt-4 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-dark-500">Subtotal ({itemCount} items)</span>
                 <span className="font-medium">{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-dark-500">Shipping</span>
-                <span className="font-medium text-green-600">Free</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-dark-500">Tax</span>
-                <span className="font-medium">Calculated at checkout</span>
+                <span className="text-dark-500">Calculated on Amazon</span>
               </div>
               <div className="flex justify-between border-t border-dark-100 pt-3 text-base font-bold">
-                <span>Total</span>
+                <span>Estimated Total</span>
                 <span>{formatPrice(subtotal)}</span>
               </div>
             </div>
 
             <button
-              type="submit"
+              onClick={handleCheckout}
               disabled={loading || items.length === 0}
-              className="btn-primary mt-6 w-full py-3"
+              className="btn-primary mt-6 flex w-full items-center justify-center gap-2 py-3"
             >
-              <Lock className="mr-2 h-4 w-4" />
-              {loading ? 'Redirecting to secure checkout...' : 'Proceed to Payment'}
+              {loading ? (
+                'Preparing your order...'
+              ) : (
+                <>
+                  Buy on Amazon
+                  <ExternalLink className="h-4 w-4" />
+                </>
+              )}
             </button>
-            <p className="mt-3 flex items-center justify-center gap-1 text-center text-xs text-dark-400">
-              <Lock className="h-3 w-3" />
-              Secured by Stripe. 256-bit SSL encryption.
+
+            <p className="mt-3 text-center text-xs text-dark-400">
+              You&apos;ll be redirected to Amazon.in to complete payment
             </p>
+
+            <Link
+              href="/products"
+              className="btn-secondary mt-2 block w-full text-center"
+            >
+              Continue Shopping
+            </Link>
           </div>
         </aside>
-      </form>
+      </div>
     </div>
   )
 }

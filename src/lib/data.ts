@@ -22,6 +22,13 @@ export interface PublicProduct {
   featured: boolean
   isActive: boolean
   inventory: number
+  amazonAsin: string | null
+  affiliateLink: string | null
+  amazonUrl?: string | null
+  rating?: number | null
+  ratingCount?: number | null
+  bestSellerRank?: string | null
+  boughtInPastMonth?: string | null
   createdAt: Date
   updatedAt: Date
 }

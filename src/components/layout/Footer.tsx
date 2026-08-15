@@ -4,15 +4,15 @@ import Link from 'next/link'
 import { Dumbbell } from 'lucide-react'
 
 const shopLinks = [
+  { name: 'Oats & Cereals', href: '/products?category=oats-cereals' },
   { name: 'Whey Protein', href: '/products?category=whey-protein' },
   { name: 'Plant Protein', href: '/products?category=plant-protein' },
-  { name: 'Casein', href: '/products?category=casein' },
   { name: 'Bars & Snacks', href: '/products?category=bars-and-snacks' },
 ]
 
 const helpLinks = [
   { name: 'About Us', href: '/about' },
-  { name: 'Shipping & Returns', href: '/about#shipping' },
+  { name: 'How It Works', href: '/about#how-it-works' },
   { name: 'FAQ', href: '/about#faq' },
   { name: 'Contact', href: '/about#contact' },
 ]
@@ -29,7 +29,7 @@ export default function Footer() {
             </span>
           </Link>
           <p className="mt-4 max-w-xs text-sm text-dark-400">
-            Premium protein supplements engineered by athletes, for athletes. Clean ingredients, third-party tested, and a 30-day money-back guarantee.
+            Your trusted source for premium nutrition products. We partner with Amazon.in to bring you the best deals.
           </p>
         </div>
 
@@ -81,12 +81,12 @@ export default function Footer() {
       <div className="border-t border-dark-800">
         <div className="container-page flex flex-col items-center justify-between gap-4 py-6 sm:flex-row">
           <p className="text-sm text-dark-400">
-            &copy; {new Date().getFullYear()} FuelFit Protein. All rights reserved.
+            &copy; {new Date().getFullYear()} FuelFit. All rights reserved. As an Amazon Associate, we earn from qualifying purchases.
           </p>
           <div className="flex items-center gap-6 text-xs text-dark-500">
             <span>Privacy Policy</span>
             <span>Terms of Service</span>
-            <span>Cookie Policy</span>
+            <span> Affiliate Disclosure</span>
           </div>
         </div>
       </div>

@@ -21,9 +21,3 @@ export function assertSameOrigin(req: Request): boolean {
     return false
   }
 }
-
-/** True when real Stripe keys are configured (demo mode is disabled). */
-export function isStripeConfigured(): boolean {
-  const key = process.env.STRIPE_SECRET_KEY || ''
-  return key.startsWith('sk_live_') || key.startsWith('sk_test_') && !key.includes('replace_me')
-}

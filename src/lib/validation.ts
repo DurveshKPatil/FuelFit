@@ -23,33 +23,6 @@ export const registerSchema = z.object({
   password: passwordPolicy,
 })
 
-export const addressSchema = z.object({
-  name: z.string().trim().min(1).max(100),
-  street: z.string().trim().min(1).max(200),
-  city: z.string().trim().min(1).max(100),
-  state: z.string().trim().min(1).max(100),
-  zipCode: z.string().trim().min(1).max(20),
-  country: z.string().trim().min(2).max(2).default('US'),
-  phone: z.string().trim().max(30).optional().or(z.literal('')),
-})
-
-export const checkoutSchema = z.object({
-  items: z
-    .array(
-      z.object({
-        productId: z.string().trim().min(1).max(40),
-        quantity: z.number().int().min(1).max(99),
-      })
-    )
-    .min(1, 'Cart is empty')
-    .max(50, 'Too many items'),
-  email: z.string().trim().toLowerCase().email().optional().or(z.literal('')),
-  notes: z.string().trim().max(1000).optional().or(z.literal('')),
-  shippingAddress: addressSchema,
-  billingAddress: addressSchema.optional(),
-  subscription: z.boolean().optional(),
-})
-
 export const productSchema = z.object({
   name: z.string().trim().min(2).max(200),
   slug: z
@@ -73,21 +46,8 @@ export const productSchema = z.object({
   featured: z.boolean().optional(),
   isActive: z.boolean().optional(),
   inventory: z.coerce.number().int().min(0).max(100000),
-})
-
-export const orderStatusSchema = z.object({
-  orderId: z.string().trim().min(1).max(40),
-  status: z.enum([
-    'PENDING',
-    'CONFIRMED',
-    'PROCESSING',
-    'SHIPPED',
-    'DELIVERED',
-    'CANCELLED',
-    'REFUNDED',
-  ]),
+  amazonAsin: z.string().trim().max(20).optional().nullable(),
 })
 
 export type RegisterInput = z.infer<typeof registerSchema>
-export type CheckoutInput = z.infer<typeof checkoutSchema>
 export type ProductInput = z.infer<typeof productSchema>

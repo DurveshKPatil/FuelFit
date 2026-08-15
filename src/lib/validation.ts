@@ -47,6 +47,7 @@ export const productSchema = z.object({
   isActive: z.boolean().optional(),
   inventory: z.coerce.number().int().min(0).max(100000),
   amazonAsin: z.string().trim().max(20).optional().nullable(),
+  affiliateLink: z.string().trim().max(500).optional().nullable(),
 })
 
 export type RegisterInput = z.infer<typeof registerSchema>

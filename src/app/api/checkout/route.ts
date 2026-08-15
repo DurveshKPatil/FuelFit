@@ -19,7 +19,7 @@ interface ResolvedProduct {
 
 function resolveProducts(items: { id: string; slug: string }[]): (ResolvedProduct | null)[] {
   return items.map(({ id, slug }) => {
-    const seed = seedProducts.find((p) => p.slug === slug || p.slug === id || p.id === id)
+    const seed = seedProducts.find((p) => p.slug === slug || p.slug === id)
     if (seed) {
       return {
         id,
